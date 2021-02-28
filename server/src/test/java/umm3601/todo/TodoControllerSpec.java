@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -177,7 +176,7 @@ public class TodoControllerSpec {
   @Test
   public void GetTodosByStatusAndOwner() throws IOException {
 
-    mockReq.setQueryString("owner=James&=false");
+    mockReq.setQueryString("owner=James&status=false");
     Context ctx = ContextUtil.init(mockReq, mockRes, "api/todos");
     todoController.getTodos(ctx);
 
@@ -199,7 +198,7 @@ public class TodoControllerSpec {
     String testID = samsId.toHexString();
 
     Context ctx = ContextUtil.init(mockReq, mockRes, "api/todos/:id", ImmutableMap.of("id", testID));
-    todoController.getTodos(ctx);
+    todoController.getTodo(ctx);
 
     assertEquals(200, mockRes.getStatus());
 
@@ -236,8 +235,8 @@ public class TodoControllerSpec {
     String testNewTodo = "{"
       + "\"owner\": \"Test Todo\","
       + "\"status\": true,"
-      + "\"body\": \"blah\","
       + "\"category\": \"groceries\","
+      + "\"body\": \"blah\","
       + "}";
 
     mockReq.setBodyContent(testNewTodo);
@@ -260,7 +259,7 @@ public class TodoControllerSpec {
     Document addedTodo = db.getCollection("todos").find(eq("_id", new ObjectId(id))).first();
     assertNotNull(addedTodo);
     assertEquals("Test Todo", addedTodo.getString("owner"));
-    assertEquals(true, addedTodo.getInteger("status"));
+    assertEquals(true, addedTodo.getBoolean("status"));
     assertEquals("groceries", addedTodo.getString("category"));
     assertEquals("blah", addedTodo.getString("body"));
   }
