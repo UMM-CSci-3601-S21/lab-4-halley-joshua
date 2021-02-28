@@ -236,7 +236,7 @@ public class TodoControllerSpec {
       + "\"owner\": \"Test Todo\","
       + "\"status\": true,"
       + "\"category\": \"groceries\","
-      + "\"body\": \"blah\","
+      + "\"body\": \"blah\""
       + "}";
 
     mockReq.setBodyContent(testNewTodo);
@@ -269,8 +269,8 @@ public class TodoControllerSpec {
     String testNewTodo = "{"
       + "\"owner\": \"Test Todo\","
       + "\"status\": \"notaboolean\","
-      + "\"body\": \"blah\","
       + "\"category\": \"homework\","
+      + "\"body\": \"blah\""
       + "}";
     mockReq.setBodyContent(testNewTodo);
     mockReq.setMethod("POST");
@@ -286,8 +286,8 @@ public class TodoControllerSpec {
 
     String testNewTodo = "{"
       + "\"status\": true,"
-      + "\"body\": \"blah\","
       + "\"category\": \"groceries\","
+      + "\"body\": \"blah\""
       + "}";
 
     mockReq.setBodyContent(testNewTodo);
@@ -304,7 +304,7 @@ public class TodoControllerSpec {
     String testNewTodo = "{"
       + "\"owner\": \"Test Todo\","
       + "\"status\": false,"
-      + "\"body\": \"blah\","
+      + "\"body\": \"blah\""
       + "}";
 
     mockReq.setBodyContent(testNewTodo);
@@ -321,7 +321,7 @@ public class TodoControllerSpec {
     String testNewTodo = "{"
       + "\"owner\": \"Test Todo\","
       + "\"status\": : false,"
-      + "\"category\": \"homework\","
+      + "\"category\": \"homework\""
       + "}";
     mockReq.setBodyContent(testNewTodo);
     mockReq.setMethod("POST");
