@@ -104,5 +104,41 @@ describe('TodoService', () => {
       req.flush(targetTodo);
     });
   });
+  describe('Calling getTodos() with parameters correctly forms the HTTP request', () => {
+    /*
+     * We really don't care what `getTodos()` returns in the cases
+     * where the filtering is happening on the server. Since all the
+     * filtering is happening on the server, `getTodos()` is really
+     * just a "pass through" that returns whatever it receives, without
+     * any "post processing" or manipulation. So the tests in this
+     * `describe` block all confirm that the HTTP request is properly formed
+     * and sent out in the world, but don't _really_ care about
+     * what `getTodos()` returns as long as it's what the HTTP
+     * request returns.
+     *
+     * So in each of these tests, we'll keep it simple and have
+     * the (mocked) HTTP request return the entire list `testTodos`
+     * even though in "real life" we would expect the server to
+     * return return a filtered subset of the users.
+     */
 
+    it('correctly calls api/todos with filter parameter \'status\'', () => {
+      todoService.getTodos({ status: 'incomplete' }).subscribe(
+        todos => expect(todos).toBe(testTodos)
+      );
+
+      // Specify that (exactly) one request will be made to the specified URL with the owner parameter.
+      const req = httpTestingController.expectOne(
+        (request) => request.url.startsWith(todoService.todoUrl) && request.params.has('status')
+      );
+
+      // Check that the request made to that URL was a GET request.
+      expect(req.request.method).toEqual('GET');
+
+      // Check that the role parameter was 'owner'
+      expect(req.request.params.get('status')).toEqual('false');
+
+      req.flush(testTodos);
+    });
+  });
 });
