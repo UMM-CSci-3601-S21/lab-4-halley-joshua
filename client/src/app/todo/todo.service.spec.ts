@@ -78,4 +78,31 @@ describe('TodoService', () => {
       req.flush(testTodos);
     });
   });
+
+  describe('getTodoByID()', () => {
+    it('calls api/todos/id with the correct ID', () => {
+      // We're just picking a todo "at random" from our little
+      // set of Users up at the top.
+      const targetTodo: Todo = testTodos[1];
+      const targetId: string = targetTodo._id;
+
+      todoService.getTodoById(targetId).subscribe(
+        // This `expect` doesn't do a _whole_ lot.
+        // Since the `targetTodo`
+        // is what the mock `HttpClient` returns in the
+        // `req.flush(targetTodo)` line below, this
+        // really just confirms that `getUserById()`
+        // doesn't in some way modify the user it
+        // gets back from the server.
+        todo => expect(todo).toBe(targetTodo)
+      );
+
+      const expectedUrl: string = todoService.todoUrl + '/' + targetId;
+      const req = httpTestingController.expectOne(expectedUrl);
+      expect(req.request.method).toEqual('GET');
+
+      req.flush(targetTodo);
+    });
+  });
+
 });
