@@ -11,7 +11,7 @@ export class TodoService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getTodos(filters?: { status?: string }): Observable<Todo[]> {
+  getTodos(filters?: { status?: string; owner?: string }): Observable<Todo[]> {
     let httpParams: HttpParams = new HttpParams();
     if (filters) {
       if (filters.status && filters.status.toString().toLocaleLowerCase() === 'complete') {
@@ -21,6 +21,9 @@ export class TodoService {
       if (filters.status && filters.status.toString().toLocaleLowerCase() === 'incomplete') {
         filters.status = 'false';
         httpParams = httpParams.set('status', filters.status);
+      }
+      if (filters.owner){
+        httpParams = httpParams.set('owner', filters.owner);
       }
   }
     return this.httpClient.get<Todo[]>(this.todoUrl, {
@@ -35,13 +38,6 @@ export class TodoService {
   filterTodos(todos: Todo[], filters: { category?: string; owner?: string; keyWord?: string; limit?: number }): Todo[] {
 
     let filteredTodos = todos;
-
-    // Filter by owner
-    if (filters.owner) {
-      filters.owner = filters.owner.toLowerCase();
-
-      filteredTodos = filteredTodos.filter(todo => todo.owner.toLowerCase().indexOf(filters.owner) !== -1);
-    }
 
     // Filter by category
     if (filters.category) {
