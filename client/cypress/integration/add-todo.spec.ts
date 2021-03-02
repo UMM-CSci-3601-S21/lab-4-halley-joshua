@@ -56,20 +56,6 @@ describe('Add todo', () => {
     cy.get('[data-test=statusError]').should('not.exist');
 
     // Before doing anything there shouldn't be an error
-    cy.get('[data-test=categoryError]').should('not.exist');
-    // Just clicking the category field without entering anything should cause an error message
-    page.getFormField('category').click().blur();
-    cy.get('[data-test=categoryError]').should('exist').and('be.visible');
-     // Some more tests for various invalid category inputs
-     page.getFormField('category').type('J').blur();
-     cy.get('[data-test=categoryError]').should('exist').and('be.visible');
-     page.getFormField('category').clear().type('This is a very long category that goes beyond the 50 character limit').blur();
-     cy.get('[data-test=categoryError]').should('exist').and('be.visible');
-    // Entering a valid category should remove the error.
-    page.getFormField('category').clear().type('homework').blur();
-    cy.get('[data-test=categoryError]').should('not.exist');
-
-    // Before doing anything there shouldn't be an error
     cy.get('[data-test=bodyError]').should('not.exist');
     // Just clicking the body field without entering anything should cause an error message
     page.getFormField('body').click().blur();
@@ -107,7 +93,7 @@ describe('Add todo', () => {
 
       // The new todo should have all the same attributes as we entered
       cy.get('.todo-card-owner').should('have.text', todo.owner);
-      cy.get('.todo-card-staus').should('have.text', todo.status);
+      cy.get('.todo-card-status').should('have.text', todo.status.toString());
       cy.get('.todo-card-category').should('have.text', todo.category);
       cy.get('.todo-card-body').should('have.text', todo.body);
       // We should see the confirmation message at the bottom of the screen
@@ -135,7 +121,7 @@ describe('Add todo', () => {
 
       // The things we entered in the form should still be there
       page.getFormField('owner').should('have.value', todo.owner);
-      page.getFormField('status').should('have.value', todo.status);
+      page.getFormField('status').should('have.value', todo.status.toString());
       page.getFormField('body').should('have.value', todo.body);
     });
   });
