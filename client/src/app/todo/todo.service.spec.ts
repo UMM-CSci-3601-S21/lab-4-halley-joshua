@@ -159,5 +159,27 @@ describe('TodoService', () => {
 
       req.flush(testTodos);
     });
+
+    it('correctly calls api/todos with multiple filter parameters', () => {
+
+      todoService.getTodos({ owner: 'Chris', status: 'incomplete'}).subscribe(
+        todos => expect(todos).toBe(testTodos)
+      );
+
+      // Specify that (exactly) one request will be made to the specified URL with the owner and limit parameters.
+      const req = httpTestingController.expectOne(
+        (request) => request.url.startsWith(todoService.todoUrl)
+          && request.params.has('owner') && request.params.has('status')
+      );
+
+      // Check that the request made to that URL was a GET request.
+      expect(req.request.method).toEqual('GET');
+
+      // Check that the role parameters are correct
+      expect(req.request.params.get('owner')).toEqual('Chris');
+      expect(req.request.params.get('status')).toEqual('false');
+
+      req.flush(testTodos);
+    });
   });
 });
