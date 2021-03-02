@@ -142,7 +142,7 @@ describe('TodoService', () => {
     });
 
     it('correctly calls api/todos with filter parameter \'owner\'', () => {
-      todoService.getTodos({ status: 'Chris' }).subscribe(
+      todoService.getTodos({ owner: 'Chris' }).subscribe(
         todos => expect(todos).toBe(testTodos)
       );
 

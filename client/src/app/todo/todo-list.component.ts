@@ -22,7 +22,8 @@ export class TodoListComponent implements OnInit {
 
   getTodosFromServer() {
       this.todoService.getTodos({
-        status: this.todoStatus
+        status: this.todoStatus,
+        owner: this.todoOwner
       }).subscribe(returnedTodos => {
         this.serverFilteredTodos = returnedTodos;
         this.updateFilter();
@@ -37,7 +38,7 @@ export class TodoListComponent implements OnInit {
 
   public updateFilter() {
     this.filteredTodos = this.todoService.filterTodos(
-      this.serverFilteredTodos, { owner: this.todoOwner, category: this.todoCategory, keyWord: this.todoKeyWord, limit: this.todoLimit });
+      this.serverFilteredTodos, { category: this.todoCategory, keyWord: this.todoKeyWord, limit: this.todoLimit });
   }
 
 
