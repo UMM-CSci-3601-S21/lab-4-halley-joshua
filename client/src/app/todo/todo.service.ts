@@ -14,9 +14,14 @@ export class TodoService {
   getTodos(filters?: { status?: string }): Observable<Todo[]> {
     let httpParams: HttpParams = new HttpParams();
     if (filters) {
-      if (filters.status){
+      if (filters.status && filters.status.toString().toLocaleLowerCase() === 'complete') {
+        filters.status = 'true';
         httpParams = httpParams.set('status', filters.status);
-    }
+      }
+      if (filters.status && filters.status.toString().toLocaleLowerCase() === 'incomplete') {
+        filters.status = 'false';
+        httpParams = httpParams.set('status', filters.status);
+      }
   }
     return this.httpClient.get<Todo[]>(this.todoUrl, {
       params: httpParams,
@@ -59,16 +64,5 @@ export class TodoService {
     return filteredTodos;
   }
 
-  // This is supposed to change the boolean value of status into Complete or Incomplete.
-  changeToComplete(status?: string, tf?: boolean): string{
-    let text: string;
-    if (status === 'true') {
-      text = 'Complete';
-    } else if (tf === true) {
-      text = 'Complete';
-    } else {
-      text = 'Incomplete';
-    }
-    return text;
-  }
+
 }
