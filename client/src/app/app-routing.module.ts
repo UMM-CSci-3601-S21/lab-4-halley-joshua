@@ -5,6 +5,7 @@ import { UserListComponent } from './users/user-list.component';
 import { UserProfileComponent } from './users/user-profile.component';
 import { AddUserComponent } from './users/add-user.component';
 import { TodoListComponent } from './todo/todo-list.component';
+import { TodoInfoComponent } from './todo/todo-info.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: 'users/new', component: AddUserComponent},
   {path: 'users/:id', component: UserProfileComponent},
   {path: 'todos', component: TodoListComponent}
+  {path: 'todos/:id', component: TodoInfoComponent}
 ];
 
 @NgModule({
