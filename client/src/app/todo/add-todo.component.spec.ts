@@ -135,43 +135,9 @@ describe('AddTodoComponent', () => {
   });
 
   describe('The category field', () => {
-    let categoryControl: AbstractControl;
-
-    beforeEach(() => {
-      categoryControl = addTodoComponent.addTodoForm.controls.category;
-    });
-
-    it('should not allow empty categories', () => {
+    it('should allow empty values', () => {
+      const categoryControl = addTodoForm.controls.category;
       categoryControl.setValue('');
-      expect(categoryControl.valid).toBeFalsy();
-    });
-
-    it('should be fine with "homework"', () => {
-      categoryControl.setValue('homework');
-      expect(categoryControl.valid).toBeTruthy();
-    });
-
-    it('should fail on single character categories', () => {
-      categoryControl.setValue('x');
-      expect(categoryControl.valid).toBeFalsy();
-      // Annoyingly, Angular uses lowercase 'l' here
-      // when it's an upper case 'L' in `Validators.minLength(2)`.
-      expect(categoryControl.hasError('minlength')).toBeTruthy();
-    });
-
-    // In the real world, you'd want to be pretty careful about
-    // setting upper limits on things like name lengths just
-    // because there are people with really long names.
-    it('should fail on really long categories', () => {
-      categoryControl.setValue('x'.repeat(100));
-      expect(categoryControl.valid).toBeFalsy();
-      // Annoyingly, Angular uses lowercase 'l' here
-      // when it's an upper case 'L' in `Validators.maxLength(2)`.
-      expect(categoryControl.hasError('maxlength')).toBeTruthy();
-    });
-
-    it('should allow digits in the name', () => {
-      categoryControl.setValue('homework1201');
       expect(categoryControl.valid).toBeTruthy();
     });
   });
