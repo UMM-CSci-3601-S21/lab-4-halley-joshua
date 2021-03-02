@@ -27,14 +27,15 @@ export class AddTodoComponent implements OnInit {
 
     status: [
       {type: 'required', message: 'Status is required'},
-      {type: 'boolean', message: 'Status must be a boolean'},
+      {type: 'pattern', message: 'Status must be a boolean'},
     ],
-
+    /*
     category: [
       {type: 'required', message: 'Category is required'},
       {type: 'minlength', message: 'Category must be at least 2 characters long'},
       {type: 'maxlength', message: 'Category cannot be more than 50 characters long'},
     ],
+    */
 
     body: [
       {type: 'required', message: 'Body is required'},
@@ -70,15 +71,7 @@ export class AddTodoComponent implements OnInit {
       ])),
 
        // We allow alphanumeric input and limit the length for name.
-       category: new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.minLength(2),
-        // In the real world you'd want to be very careful about having
-        // an upper limit like this because people can sometimes have
-        // very long names. This demonstrates that it's possible, though,
-        // to have maximum length limits.
-        Validators.maxLength(50),
-      ])),
+       category: new FormControl(),
 
       // We allow alphanumeric input and limit the length for name.
       body: new FormControl('', Validators.compose([
@@ -97,7 +90,7 @@ export class AddTodoComponent implements OnInit {
 
   submitForm() {
     this.todoService.addTodo(this.addTodoForm.value).subscribe(newID => {
-      this.snackBar.open('Added Todo ' + this.addTodoForm.value.name, null, {
+      this.snackBar.open('Added Todo ' + this.addTodoForm.value.owner, null, {
         duration: 2000,
       });
       this.router.navigate(['/todos/', newID]);
