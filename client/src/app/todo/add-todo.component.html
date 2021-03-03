@@ -1,6 +1,4 @@
-<!-- example from
-https://github.com/AngularTemplates/angular-forms-and-validations/blob/master/src/app/form-component/form.component.html
-is potentially helpful and contributed to the shaping of this example -->
+
 <div fxLayout="row">
   <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
     <form [formGroup]="addTodoForm" (ngSubmit)="submitForm();">
@@ -49,10 +47,10 @@ is potentially helpful and contributed to the shaping of this example -->
             <mat-label>Category</mat-label>
             <input matInput placeholder="Category"
                   formControlName="category">
-            <mat-hint>Not required in Angular for demonstration, still required by server</mat-hint>
           </mat-form-field>
 
         </mat-card-content>
+
         <mat-card-actions align="end">
           <button
             mat-button

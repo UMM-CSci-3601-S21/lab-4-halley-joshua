@@ -102,24 +102,23 @@ describe('AddTodoComponent', () => {
       expect(statusControl.valid).toBeFalsy();
     });
 
-    it('should be fine with "true"', () => {
-      statusControl.setValue('true');
+    it('should be fine with "complete"', () => {
+      statusControl.setValue('complete');
       expect(statusControl.valid).toBeTruthy();
     });
 
-    it('should be fine with "false"', () => {
-      statusControl.setValue('false');
+    it('should be fine with "incomplete"', () => {
+      statusControl.setValue('incomplete');
       expect(statusControl.valid).toBeTruthy();
     });
 
-    it('should fail on status that are not boolean values', () => {
+    it('should fail on status that are not either "complete" or "incomplete"', () => {
       statusControl.setValue('14');
       expect(statusControl.valid).toBeFalsy();
       expect(statusControl.hasError('pattern')).toBeTruthy();
     });
   });
 
-  //CHECK
   describe('The category field', () => {
     it('should allow empty values', () => {
       const categoryControl = addTodoForm.controls.category;
@@ -127,7 +126,6 @@ describe('AddTodoComponent', () => {
       expect(categoryControl.valid).toBeTruthy();
     });
   });
-
 
   describe('The body field', () => {
     let bodyControl: AbstractControl;

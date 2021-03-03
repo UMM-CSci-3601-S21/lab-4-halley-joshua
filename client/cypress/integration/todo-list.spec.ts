@@ -22,7 +22,7 @@ describe('Todo list', () => {
 
     // All of the todo list items that show should have the status we are looking for
     page.getTodoListItems().each(e => {
-      cy.wrap(e).find('.todo-list-status').should('have.text', 'true');
+      cy.wrap(e).find('.todo-list-status').should('contain', 'complete');
     });
   });
 
@@ -35,7 +35,7 @@ describe('Todo list', () => {
 
     // All of the todo list items that show should have the status we are looking for
     page.getTodoListItems().each(e => {
-      cy.wrap(e).find('.todo-list-owner').should('have.text', 'Blanche');
+      cy.wrap(e).find('.todo-list-owner').should('contain', 'Blanche');
     });
   });
 
@@ -47,7 +47,7 @@ describe('Todo list', () => {
 
     // Confirm they all have homework category
     page.getTodoListItems().each(e => {
-      cy.wrap(e).find('.todo-list-category').should('have.text', 'homework');
+      cy.wrap(e).find('.todo-list-category').should('contain', 'homework');
     });
   });
 

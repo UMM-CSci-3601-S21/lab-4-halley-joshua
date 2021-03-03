@@ -25,13 +25,7 @@ export class AddTodoComponent implements OnInit {
 
     status: [
       {type: 'required', message: 'Status is required'},
-      {type: 'pattern', message: 'Status must be a boolean'},
-    ],
-
-    category: [
-      {type: 'required', message: 'Category is required'},
-      {type: 'minlength', message: 'Category must be at least 2 characters long'},
-      {type: 'maxlength', message: 'Category cannot be more than 50 characters long'},
+      {type: 'pattern', message: 'Status must be complete, incomplete or true, false.'},
     ],
 
     body: [
@@ -56,7 +50,7 @@ export class AddTodoComponent implements OnInit {
      status: new FormControl('', Validators.compose([
         Validators.required,
 
-        Validators.pattern('^(true|false)$')
+        Validators.pattern('^(complete|incomplete|Complete|Incomplete|true|false)$')
       ])),
 
        category: new FormControl(),
@@ -76,6 +70,12 @@ export class AddTodoComponent implements OnInit {
 
 
   submitForm() {
+    if (this.addTodoForm.value.status === 'Complete' || this.addTodoForm.value.status === 'complete'){
+      this.addTodoForm.value.status = true;
+    }
+    else if (this.addTodoForm.value.status === 'Incomplete' || this.addTodoForm.value.status === 'incomplete'){
+      this.addTodoForm.value.status = false;
+    }
     this.todoService.addTodo(this.addTodoForm.value).subscribe(newID => {
       this.snackBar.open('Added Todo ' + this.addTodoForm.value.owner, null, {
         duration: 2000,
