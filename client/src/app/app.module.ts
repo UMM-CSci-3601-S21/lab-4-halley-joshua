@@ -27,11 +27,17 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { UserListComponent } from './users/user-list.component';
 import { HomeComponent } from './home/home.component';
 import { UserService } from './users/user.service';
+import { TodoService } from './todo/todo.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
 import { UserCardComponent } from './users/user-card.component';
 import { UserProfileComponent } from './users/user-profile.component';
 import { AddUserComponent } from './users/add-user.component';
+import { AddTodoComponent } from './todo/add-todo.component';
+import { TodoListComponent } from './todo/todo-list.component';
+import { TodoInfoComponent } from './todo/todo-info.component';
+import { TodoCardComponent } from './todo/todo-card.component';
+
 
 const MATERIAL_MODULES: any[] = [
   MatListModule,
@@ -60,6 +66,10 @@ const MATERIAL_MODULES: any[] = [
     UserCardComponent,
     UserProfileComponent,
     AddUserComponent,
+    AddTodoComponent,
+    TodoListComponent,
+    TodoInfoComponent,
+    TodoCardComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +83,8 @@ const MATERIAL_MODULES: any[] = [
     LayoutModule,
   ],
   providers: [
-    UserService
+    UserService,
+    TodoService
   ],
   bootstrap: [AppComponent]
 })
