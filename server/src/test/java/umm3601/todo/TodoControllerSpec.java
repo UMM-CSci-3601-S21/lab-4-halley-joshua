@@ -331,22 +331,4 @@ public class TodoControllerSpec {
       todoController.addNewTodo(ctx);
     });
   }
-
-  @Test
-  public void DeleteTodo() throws IOException {
-
-    String testID = samsId.toHexString();
-
-    // Todo exists before deletion
-    assertEquals(1, db.getCollection("todos").countDocuments(eq("_id", new ObjectId(testID))));
-
-    Context ctx = ContextUtil.init(mockReq, mockRes, "api/todos/:id", ImmutableMap.of("id", testID));
-    todoController.deleteTodo(ctx);
-
-    assertEquals(200, mockRes.getStatus());
-
-    // Todo is no longer in the database
-    assertEquals(0, db.getCollection("todos").countDocuments(eq("_id", new ObjectId(testID))));
-  }
-
 }

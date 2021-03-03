@@ -38,4 +38,49 @@ describe('Todo list', () => {
       cy.wrap(e).find('.todo-list-owner').should('have.text', 'Blanche');
     });
   });
+
+  it('Should type something in the category filter and check that it returned the correct elements', () => {
+    // Filter for homework todos
+    cy.get('#todo-category-input').type('homework');
+
+    page.getTodoListItems().should('exist');
+
+    // Confirm they all have homework category
+    page.getTodoListItems().each(e => {
+      cy.wrap(e).find('.todo-list-category').should('have.text', 'homework');
+    });
+  });
+
+  it('Should type something in key word filter', () => {
+    // Filter by qui
+    cy.get('#todo-keyWord-input').type('qui');
+
+    page.getTodoListItems().should('exist');
+
+    // Confirm bodies contain qui
+    page.getTodoListItems().each(e => {
+      cy.wrap(e).get('.todo-list-body').contains('qui');
+    });
+  });
+
+  it('Should type a number in the limit filter', () => {
+    // Limit to 5 todos
+    cy.get('#todo-limit-input').type('5');
+
+    page.getTodoListItems().should('exist');
+
+    // Confirm there are 5 todos showing
+    page.getTodoListItems().should('have.length', 5);
+  });
+
+  it('Should click add todo and go to the right URL', () => {
+    // Click on the button for adding a new user
+    page.addTodoButton().click();
+
+    // The URL should end with '/users/new'
+    cy.url().should(url => expect(url.endsWith('/todos/new')).to.be.true);
+
+    // On the page we were sent to, We should see the right title
+    cy.get('.add-todo-title').should('have.text', 'New Todo');
+  });
 });
