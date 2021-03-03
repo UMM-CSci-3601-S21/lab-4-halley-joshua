@@ -182,4 +182,19 @@ describe('TodoService', () => {
       req.flush(testTodos);
     });
   });
+
+  it('addTodo() posts to api/todos', () => {
+
+    todoService.addTodo(testTodos[1]).subscribe(
+      id => expect(id).toBe('testid')
+    );
+
+    const req = httpTestingController.expectOne(todoService.todoUrl);
+
+    expect(req.request.method).toEqual('POST');
+    expect(req.request.body).toEqual(testTodos[1]);
+
+    req.flush({id: 'testid'});
+  });
 });
+
