@@ -65,16 +65,6 @@ public class TodoController {
   }
 
   /**
-   * Delete the todo specified by the `id` parameter in the request.
-   *
-   * @param ctx a Javalin HTTP context
-   */
-  public void deleteTodo(Context ctx) {
-    String id = ctx.pathParam("id");
-    todoCollection.deleteOne(eq("_id", new ObjectId(id)));
-  }
-
-  /**
    * Get a JSON response with a list of all the todos.
    *
    * @param ctx a Javalin HTTP context
@@ -116,22 +106,5 @@ public class TodoController {
     todoCollection.insertOne(newTodo);
     ctx.status(201);
     ctx.json(ImmutableMap.of("id", newTodo._id));
-  }
-
-  /**
-   * Utility function to generate the md5 hash for a given string
-   *
-   * @param str the string to generate a md5 for
-   */
-  @SuppressWarnings("lgtm[java/weak-cryptographic-algorithm]")
-  public String md5(String str) throws NoSuchAlgorithmException {
-    MessageDigest md = MessageDigest.getInstance("MD5");
-    byte[] hashInBytes = md.digest(str.toLowerCase().getBytes(StandardCharsets.UTF_8));
-
-    StringBuilder result = new StringBuilder();
-    for (byte b : hashInBytes) {
-      result.append(String.format("%02x", b));
-    }
-    return result.toString();
   }
 }

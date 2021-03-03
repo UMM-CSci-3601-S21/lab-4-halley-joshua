@@ -41,6 +41,16 @@ export class TodoListComponent implements OnInit {
       this.serverFilteredTodos, { category: this.todoCategory, keyWord: this.todoKeyWord, limit: this.todoLimit });
   }
 
+  public transformStatus(aStatus: boolean){
+    let aString: string;
+    if(aStatus === false){
+      aString = 'incomplete';
+    }
+    else if(aStatus === true){
+      aString = 'complete';
+    }
+    return aString;
+  }
 
   ngOnInit(): void {
     this.getTodosFromServer();

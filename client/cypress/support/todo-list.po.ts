@@ -19,4 +19,7 @@ export class TodoListPage {
     return cy.get('[data-test=todoStatusSelect]').click().get(`mat-option[value="${value}"]`).click();
   }
 
+  addTodoButton() {
+    return cy.get('[data-test=addTodoButton]');
+  }
 }

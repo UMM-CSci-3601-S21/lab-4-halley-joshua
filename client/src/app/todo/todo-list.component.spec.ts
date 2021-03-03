@@ -47,19 +47,12 @@ describe('TodoListComponent', () => {
     TestBed.configureTestingModule({
       imports: [COMMON_IMPORTS],
       declarations: [TodoListComponent],
-      // providers:    [ UserService ]  // NO! Don't provide the real service!
-      // Provide a test-double instead
-      // This MockerUserService is defined in client/testing/user.service.mock.
       providers: [{ provide: TodoService, useValue: new MockTodoService() }]
     });
   });
 
   beforeEach(waitForAsync(() => {
     TestBed.compileComponents().then(() => {
-      // Create a "fixture" of the UserListComponent. that
-      // allows us to get an instance of the component
-      // (userList, below) that we can "control" in
-      // the tests.
       fixture = TestBed.createComponent(TodoListComponent);
       todoList = fixture.componentInstance;
       fixture.detectChanges();
@@ -75,16 +68,6 @@ describe('TodoListComponent', () => {
   });
 });
 
-/*
- * This test is a little odd, but illustrates how we can use "stubbing"
- * to create mock objects (a service in this case) that be used for
- * testing. Here we set up the mock UserService (userServiceStub) so that
- * _always_ fails (throws an exception) when you request a set of users.
- *
- * So this doesn't really test anything meaningful in the context of our
- * code (I certainly wouldn't copy it), but it does illustrate some nice
- * testing tools. Hopefully it's useful as an example in that regard.
- */
 describe('Misbehaving Todo List', () => {
   let todoList: TodoListComponent;
   let fixture: ComponentFixture<TodoListComponent>;
@@ -95,7 +78,7 @@ describe('Misbehaving Todo List', () => {
   };
 
   beforeEach(() => {
-    // stub UserService for test purposes
+
     todoServiceStub = {
       getTodos: () => new Observable(observer => {
         observer.error('Error-prone observable');
@@ -108,8 +91,6 @@ describe('Misbehaving Todo List', () => {
     TestBed.configureTestingModule({
       imports: [COMMON_IMPORTS],
       declarations: [TodoListComponent],
-      // providers:    [ UserService ]  // NO! Don't provide the real service!
-      // Provide a test-double instead
       providers: [{ provide: TodoService, useValue: todoServiceStub }]
     });
   });
@@ -123,10 +104,6 @@ describe('Misbehaving Todo List', () => {
   }));
 
   it('fails to load todos if we do not set up a TodoListService', () => {
-    // Since calling both getUsers() and getUsersFiltered() return
-    // Observables that then throw exceptions, we don't expect the component
-    // to be able to get a list of users, and serverFilteredUsers should
-    // be undefined.
     expect(todoList.serverFilteredTodos).toBeUndefined();
   });
 });

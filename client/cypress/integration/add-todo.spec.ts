@@ -1,5 +1,6 @@
 import { Todo } from 'src/app/todo/todo';
 import { AddTodoPage } from '../support/add-todo.po';
+import { TodoListComponent } from 'src/app/todo/todo-list.component';
 
 describe('Add todo', () => {
   const page = new AddTodoPage();
@@ -19,7 +20,7 @@ describe('Add todo', () => {
     page.addTodoButton().should('be.disabled');
     page.getFormField('owner').type('test');
     page.addTodoButton().should('be.disabled');
-    page.getFormField('status').type('true');
+    page.getFormField('status').type('complete');
     page.addTodoButton().should('be.disabled');
     page.getFormField('category').type('groceries');
     page.addTodoButton().should('be.disabled');
@@ -52,7 +53,7 @@ describe('Add todo', () => {
     page.getFormField('status').clear().type('asd').blur();
     cy.get('[data-test=statusError]').should('exist').and('be.visible');
     // Entering a valid status should remove the error.
-    page.getFormField('status').clear().type('true').blur();
+    page.getFormField('status').clear().type('complete').blur();
     cy.get('[data-test=statusError]').should('not.exist');
 
     // Before doing anything there shouldn't be an error
@@ -75,7 +76,7 @@ describe('Add todo', () => {
       cy.task('seed:database');
     });
 
-    it('Should go to the right page, and have the right info', () => {
+    it('Should go to the right page, and have the right info',() => {
       const todo: Todo = {
         _id: null,
         owner: 'Test Todo',
@@ -92,10 +93,10 @@ describe('Add todo', () => {
         .should('not.match', /\/todos\/new$/);
 
       // The new todo should have all the same attributes as we entered
-      cy.get('.todo-card-owner').should('have.text', todo.owner);
-      cy.get('.todo-card-status').should('have.text', todo.status.toString());
-      cy.get('.todo-card-category').should('have.text', todo.category);
-      cy.get('.todo-card-body').should('have.text', todo.body);
+      cy.get('.todo-card-owner').should('contain', todo.owner);
+      cy.get('.todo-card-status').should('contain', todo.status.toString());
+      cy.get('.todo-card-category').should('contain', todo.category);
+      cy.get('.todo-card-body').should('contain', todo.body);
       // We should see the confirmation message at the bottom of the screen
       cy.get('.mat-simple-snackbar').should('contain', `Added Todo ${todo.owner}`);
     });
